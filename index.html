@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<!--
+	Copyright 2015, Google, Inc.
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-->
+<html>
+<head>
+  <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
+  <link id="themecss" rel="stylesheet"
+        href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/googlecode.min.css">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script>
+
+
+  <style>
+
+    label {
+      font-weight: normal;
+    }
+    #control-panel {
+      width: 80%;
+      margin: 10px auto 0;
+    }
+
+    #control-panel div {
+      margin: 0 10px;
+      display: inline-block;
+    }
+
+    #raw-code {
+      font-family: Monaco, monospace;
+    }
+
+    /* small = vertical */
+    @media (max-width: 1200px) {
+      #raw-code {
+        height: 400px;
+        width: 90%;
+        margin: 10px auto;
+        display: block;
+      }
+
+      #highlighted-code {
+        height: 400px;
+        width: 90%;
+        margin: 10px auto;
+        display: block;
+      }
+    }
+
+    /* big = side by side */
+    @media (min-width: 1201px) {
+      #raw-code {
+        height: 95%;
+        width: 45%;
+        display: inline-block;
+        margin: 20px 20px;
+      }
+
+      #highlighted-code {
+        height: 95%;
+        width: 45%;
+        display: inline-block;
+        margin: 20px 20px;
+      }
+    }
+
+
+  </style>
+  <script>
+    $(document).ready(function () {
+      // font theme selectors
+      $('input[name=styleselection]').bind('change', function() {
+        $("#themecss").remove();
+        $('head').append('<link rel="stylesheet" type="text/css" id="themecss" href="'+$(this).val()+'">');
+      });
+
+      $('input[name=fontselection]').bind('change', function() {
+        $("#highlighted-code").css("font-family", $(this).val());
+      });
+
+      $('input[name=fontsize]').bind('change', function() {
+        $("#highlighted-code").css("font-size", $(this).val());
+      });
+
+      // Highlight code
+      $('#raw-code').bind('input propertychange', function () {
+        // copy the code
+        var code = $('#raw-code').val();
+
+        // purge leading whitespace
+        var codeLines = code.split("\n");
+        var firstLine = codeLines[0];
+        var leadingWhitespace = firstLine.length - firstLine.trimLeft().length;
+
+        if (leadingWhitespace > 0) {
+          console.log("trimming each line by " + leadingWhitespace);
+          var bailedOut = false;
+
+          for (var i in codeLines) {
+            if (codeLines[i].slice(0, leadingWhitespace).trim() != "") {
+              // We're about to trim a non-space. Bail out.
+              console.log("Bailing on whitespace trim. Found non-whitespace on line " + i);
+              bailedOut = true;
+              break;
+            }
+            codeLines[i] = codeLines[i].slice(leadingWhitespace);
+          }
+          if (!bailedOut) {
+            code = codeLines.join([separator = '\n']);
+          }
+        }
+        $("#highlighted-code").text(code);
+
+        // highlight it
+        hljs.highlightBlock($("#highlighted-code").get(0));
+      });
+
+      // expand selection when you click in the box
+      $("#highlighted-code").click(function() {
+        if (this.select) {
+          this.select();
+        }
+        else if (document.selection) {
+          var range = document.body.createTextRange();
+          range.moveToElementText(this);
+          range.select();
+        } else if (window.getSelection) {
+          var range = document.createRange();
+          range.selectNode(this);
+          window.getSelection().addRange(range);
+        }
+      });
+    });
+  </script>
+
+
+</head>
+<body>
+
+<div id="control-panel">
+  <div>
+    <label><input type="radio" name="fontselection" value="Monaco" checked="checked"> Monaco</label>
+    <label><input type="radio" name="fontselection" value="Menlo"> Menlo</label>
+    <label><input type="radio" name="fontselection" value='"Courier New"'> Courier New</label>
+    <label><input type="radio" name="fontselection" value="monospace"> monospace</label>
+  </div>
+
+  <div>
+    <label><input type="radio" name="fontsize" value="10pt"> 10</label>
+    <label><input type="radio" name="fontsize" value="12pt"> 12</label>
+    <label><input type="radio" name="fontsize" value="14pt" checked="checked"> 14</label>
+    <label><input type="radio" name="fontsize" value="16pt"> 16</label>
+    <label><input type="radio" name="fontsize" value="20pt"> 20</label>
+    <label><input type="radio" name="fontsize" value="24pt"> 24</label>
+    <label><input type="radio" name="fontsize" value="30pt"> 30</label>
+    <label><input type="radio" name="fontsize" value="30pt"> 30</label>
+    <label><input type="radio" name="fontsize" value="36pt"> 36</label>
+    <label><input type="radio" name="fontsize" value="42pt"> 42</label>
+  </div>
+
+  <div>
+    <label><input type="radio" name="styleselection" value="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/googlecode.min.css" checked="checked"> Light</label>
+    <label><input type="radio" name="styleselection" value="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/ir_black.min.css"> Contrast</label>
+    <label><input type="radio" name="styleselection" value="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/androidstudio.min.css"> Android</label>
+    <label><input type="radio" name="styleselection" value="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/default.min.css"> Default</label>
+    <!--<label><input type="radio" name="styleselection" value="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/arta.min.css"> Arta</label>-->
+    <label><input type="radio" name="styleselection" value="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/ascetic.min.css"> Grayscale</label>
+    <label><input type="radio" name="styleselection" value="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/far.min.css"> Blue</label>
+    <label><input type="radio" name="styleselection" value="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/github-gist.min.css"> Gist</label>
+    <!--<label><input type="radio" name="styleselection" value="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/github.min.css"> Github</label>-->
+    <!--<label><input type="radio" name="styleselection" value="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/idea.min.css"> Idea</label>-->
+    <!--<label><input type="radio" name="styleselection" value="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/sunburst.min.css"> Sunburst</label>-->
+    <!--<label><input type="radio" name="styleselection" value="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/tomorrow.min.css"> Tomorrow</label>-->
+    <!--<label><input type="radio" name="styleselection" value="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/code.min.css"> Xcode</label>-->
+  </div>
+
+
+</div>
+
+<textarea id="raw-code"></textarea>
+
+<pre id="highlighted-code" style="font-family: Monaco, monospace;"></pre>
+
+</body>
+</html>
