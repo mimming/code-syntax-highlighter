@@ -107,7 +107,7 @@
         // copy the code
         var code = $('#raw-code').val();
 
-        // purge leading whitespace
+        // purge leading whitespace, based on leading whitespace on first line
         var codeLines = code.split("\n");
         var firstLine = codeLines[0];
         var leadingWhitespace = firstLine.length - firstLine.trimLeft().length;
@@ -116,6 +116,7 @@
           console.log("trimming each line by " + leadingWhitespace);
           var bailedOut = false;
 
+          // double check lines below to make sure we're not going to trim any code
           for (var i in codeLines) {
             if (codeLines[i].slice(0, leadingWhitespace).trim() != "") {
               // We're about to trim a non-space. Bail out.
