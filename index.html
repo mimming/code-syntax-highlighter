@@ -15,21 +15,20 @@
 -->
 <html>
 <head>
-  <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+  <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
 
-  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-  <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 
   <link id="themecss" rel="stylesheet"
-        href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/googlecode.min.css">
-  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script>
-
+        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/googlecode.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script>
 
   <style>
-
     label {
       font-weight: normal;
     }
+
     #control-panel {
       width: 80%;
       margin: 10px auto 0;
@@ -41,6 +40,9 @@
     }
 
     #raw-code {
+      font-family: Monaco, monospace;
+    }
+    #highlighted-code {
       font-family: Monaco, monospace;
     }
 
@@ -64,35 +66,39 @@
     /* big = side by side */
     @media (min-width: 1201px) {
       #raw-code {
-        height: 95%;
-        width: 45%;
+        position: absolute;
+        top: 40px;
+        bottom: 0;
+        left: 0;
+        width: 48%;
         display: inline-block;
         margin: 20px 20px;
       }
 
       #highlighted-code {
-        height: 95%;
-        width: 45%;
+        position: absolute;
+        top: 40px;
+        bottom: 0;
+        right: 0;
+        width: 48%;
         display: inline-block;
         margin: 20px 20px;
       }
     }
-
-
   </style>
   <script>
     $(document).ready(function () {
       // font theme selectors
-      $('input[name=styleselection]').bind('change', function() {
+      $('input[name=styleselection]').bind('change', function () {
         $("#themecss").remove();
-        $('head').append('<link rel="stylesheet" type="text/css" id="themecss" href="'+$(this).val()+'">');
+        $('head').append('<link rel="stylesheet" type="text/css" id="themecss" href="' + $(this).val() + '">');
       });
 
-      $('input[name=fontselection]').bind('change', function() {
+      $('input[name=fontselection]').bind('change', function () {
         $("#highlighted-code").css("font-family", $(this).val());
       });
 
-      $('input[name=fontsize]').bind('change', function() {
+      $('input[name=fontsize]').bind('change', function () {
         $("#highlighted-code").css("font-size", $(this).val());
       });
 
@@ -130,7 +136,7 @@
       });
 
       // expand selection when you click in the box
-      $("#highlighted-code").click(function() {
+      $("#highlighted-code").click(function () {
         if (this.select) {
           this.select();
         }
@@ -173,19 +179,25 @@
   </div>
 
   <div>
-    <label><input type="radio" name="styleselection" value="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/googlecode.min.css" checked="checked"> Light</label>
-    <label><input type="radio" name="styleselection" value="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/ir_black.min.css"> Contrast</label>
-    <label><input type="radio" name="styleselection" value="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/androidstudio.min.css"> Android</label>
-    <label><input type="radio" name="styleselection" value="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/default.min.css"> Default</label>
-    <!--<label><input type="radio" name="styleselection" value="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/arta.min.css"> Arta</label>-->
-    <label><input type="radio" name="styleselection" value="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/ascetic.min.css"> Grayscale</label>
-    <label><input type="radio" name="styleselection" value="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/far.min.css"> Blue</label>
-    <label><input type="radio" name="styleselection" value="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/github-gist.min.css"> Gist</label>
-    <!--<label><input type="radio" name="styleselection" value="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/github.min.css"> Github</label>-->
-    <!--<label><input type="radio" name="styleselection" value="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/idea.min.css"> Idea</label>-->
-    <!--<label><input type="radio" name="styleselection" value="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/sunburst.min.css"> Sunburst</label>-->
-    <!--<label><input type="radio" name="styleselection" value="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/tomorrow.min.css"> Tomorrow</label>-->
-    <!--<label><input type="radio" name="styleselection" value="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/code.min.css"> Xcode</label>-->
+    <label><input type="radio" name="styleselection"
+                  value="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/googlecode.min.css"
+                  checked="checked"> Light</label>
+    <label><input type="radio" name="styleselection"
+                  value="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/ir_black.min.css">
+      Contrast</label>
+    <label><input type="radio" name="styleselection"
+                  value="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/androidstudio.min.css"> Android</label>
+    <label><input type="radio" name="styleselection"
+                  value="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/default.min.css">
+      Default</label>
+    <label><input type="radio" name="styleselection"
+                  value="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/ascetic.min.css">
+      Grayscale</label>
+    <label><input type="radio" name="styleselection"
+                  value="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/far.min.css"> Blue</label>
+    <label><input type="radio" name="styleselection"
+                  value="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/github-gist.min.css">
+      Gist</label>
   </div>
 
 
@@ -193,7 +205,7 @@
 
 <textarea id="raw-code"></textarea>
 
-<pre id="highlighted-code" style="font-family: Monaco, monospace;"></pre>
+<pre id="highlighted-code"></pre>
 
 </body>
 </html>

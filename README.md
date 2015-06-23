@@ -6,7 +6,6 @@ It exists to syntax highlight code for pasting into presentation slides like [Go
 
 ## Using it
 
-0. Copy the code to a web server.
 0. Open `index.html` in your favorite web browser.
 0. Paste some code into the text area on the top left.
 0. Copy pretty code from the bottom right. Paste it into your presentation.
