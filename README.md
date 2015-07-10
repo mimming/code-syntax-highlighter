@@ -1,4 +1,5 @@
 # Code Syntax Highlighter
+![preview](preview.gif)
 
 This tiny web app is a wrapper around the wonderful [highlight.js](https://highlightjs.org/) syntax highlighting library.
 
